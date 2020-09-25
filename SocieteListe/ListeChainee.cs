@@ -1,196 +1,118 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SocieteListe
+namespace SocieteAvecListe.Classes
 {
-    
-        public class Element
+    public class Element
+    {
+        private object _Object;
+        private Element _Suivant;
+
+        public Element(object _object)
         {
-            public Object valeur { get; set; }
-            public Element suivant { get; set; }
-
-            public  Element()
-            {
-                valeur = null;
-                suivant = null;
-            }
-
-            public Element(Object uneValeur)
-            {
-                valeur = uneValeur;
-                suivant = null;
-            }
-
-            public Element(Object uneValeur, Element unSuivant)
-            {
-                valeur = uneValeur;
-                suivant = unSuivant;
-            }
-
-            public String ToString()
-            {
-            if (this.valeur == null) {
-                return "''";
-            }
-            else
-            {
-                if (this.suivant != null)
-                {
-
-                    string strx = this.valeur.ToString() + " " + this.suivant.ToString();
-                    return strx;
-                }
-                else
-                {
-                    string strx = this.valeur.ToString();
-                    return strx;
-                }
-            }
+            this._Object = _object;
         }
 
-            
+        public object Objet { get => _Object; set => _Object = value; }
+        public Element Suivant { get => _Suivant; set => _Suivant = value; }
+    }
 
-        public class Liste
+    public class Liste
+    {
+        private Element _Debut;
+        private int _NbElements;
+
+        private Element[] arr = new Element[100];
+
+        public void FillArray()
         {
-            public Element premier { get; set; }
-            public int nbElement { get; set; }
-            private Element[] arr = new Element[100];
-
-            public Liste()
+            Element element = this._Debut;
+            if (element != null)
             {
-
-            }
-
-            public Liste(Element unPremier)
-            {
-                premier = unPremier;
-            }
-
-            public void completeTableau()
-            {
-                Element element = this.premier;
-                if (element != null)
-                {
-                    int i = 0;
-                    arr[i] = element;
-                    while (element.suivant != null)
-                    {
-                        element = element.suivant;
-                        i++;
-                        arr[i] = element;
-                    }
-                }
-            }
-
-            public void ajouterDebut(object unPremier)
-            {
-                Element aMettreDebut = new Element(unPremier);
-                // Inversion
-                aMettreDebut.suivant = this.premier;
-                this.premier = aMettreDebut;
-                this.nbElement++;
-                completeTableau();
-            }
-
-            public Element getDernier()
-            {
-                Element element = this.premier;
+                int i = 0;
+                arr[i] = element;
                 while (element.Suivant != null)
                 {
                     element = element.Suivant;
+                    i++;
+                    arr[i] = element;
                 }
-                return element;
-            }
-
-            public void ajouterFin(object dernier_objet)
-            {
-                Element aMettreFin = new Element(dernier_objet);
-                if (this.premier == null)
-                {
-                    this.premier = aMettreFin;
-                    this.nbElement++;
-                    return;
-                }
-                 Element dernierElement = getDernier();
-                dernierElement.suivant = aMettreFin;
-                this.nbElement++;
-                completeTableau();
-
-                public void Lister()
-                {
-                    Element element = this.premier;
-                    if (element != null)
-                    {
-                        string cumul = element.Objet.ToString();
-                        while (element.Suivant != null)
-                        {
-                            element = element.Suivant;
-                            cumul += "," + element.Objet.ToString();
-                        }
-                        Console.WriteLine(cumul);
-                    }
-                    else
-                    {
-                        Console.WriteLine("La liste est vide");
-                    }
-                }
-
-                public void Vider()
-                {
-                    this.premier = null;
-                    this._NbElements = 0;
-                    FillArray();
-                }
-
-                //public String ToString()
-                //{
-                //  if (this.premier == null)
-                //{
-                //  return "''";
-                //}
-                //else
-                //{
-                //  if (this.suivant != null)
-                //{
-
-                //  string strx = this.valeur.ToString() + " " + this.suivant.ToString();
-                //return strx;
-                //}
-                //else
-                //{
-                //  string strx = this.valeur.ToString();
-                //return strx;
-                //}
-                //}
-            }
-
-            public static void Main(string[] args)
-            {
-                Element a = new Element("1");
-                Element b = new Element("2");
-                Element c = new Element("3");
-                //Element d = new Element("4");
-
-                Liste maListe = new Liste();
-                maListe.ajouterDebut(a);
-
-                Console.Write(a.ToString());
-                a.suivant = b;
-                Console.Write(a.ToString());
-                b.suivant = c;
-                Console.Write(a.ToString());
-                
-                Console.ReadLine();
             }
         }
+
+        public Element this[int i]
+        {
+            get => arr[i];
+            set => arr[i] = value;
+        }
+
+        public int NbElements { get => _NbElements; }
+
+        public Liste()
+        {
+            _Debut = null;
+            _NbElements = 0;
+        }
+        public void InsererDebut(object premier_objet)
+        {
+            Element newDebut = new Element(premier_objet);
+            newDebut.Suivant = this._Debut;
+            this._Debut = newDebut;
+            this._NbElements++;
+            FillArray();
+        }
+
+        public void InsererFin(object dernier_objet)
+        {
+            Element newFin = new Element(dernier_objet);
+            if (this._Debut == null)
+            {
+                this._Debut = newFin;
+                this._NbElements++;
+                return;
+            }
+            Element dernierElement = RecupereDernierElement();
+            dernierElement.Suivant = newFin;
+            this._NbElements++;
+            FillArray();
+        }
+
+        public Element RecupereDernierElement()
+        {
+            Element element = this._Debut;
+            while (element.Suivant != null)
+            {
+                element = element.Suivant;
+            }
+            return element;
+        }
+
+        public void Lister()
+        {
+            Element element = this._Debut;
+            if (element != null)
+            {
+                string cumul = element.Objet.ToString();
+                while (element.Suivant != null)
+                {
+                    element = element.Suivant;
+                    cumul += "," + element.Objet.ToString();
+                }
+                Console.WriteLine(cumul);
+            }
+            else
+            {
+                Console.WriteLine("----- La liste est vide -----");
+            }
+        }
+
+        public void Vider()
+        {
+            this._Debut = null;
+            this._NbElements = 0;
+            FillArray();
+        }
+
     }
-
-       
-        
-
-    
-
 }

@@ -1,33 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SocieteListe
+namespace SocieteAvecListe.Classes
 {
-    class Chef : Employe
+    public class Chef : Employe
     {
-        public String Service { get; set; }
+        public string Service { get; set; }
 
-        public Chef(): base()
+        public Chef() : base()
         {
 
         }
-        public Chef(String service, int salaire, String nom, String prenom, int age) : base(salaire,nom,prenom,age)
+
+        public Chef(string service, int salaire, string nom, string prenom, int age) : base(salaire, nom, prenom, age)
         {
-             Service = service;
+            this.Service = service;
         }
 
-        
+        public override string ToString()
+        {
+            return $"{this.Nom} {this.Prenom} {this.Age} {this.Salaire} {this.Service}";
+        }
 
-        
+        public void Afficher(Chef chef)
+        {
+            Console.WriteLine($"Nom: {chef.Nom}");
+            Console.WriteLine($"Prénom: {chef.Prenom}");
+            Console.WriteLine($"Age: {chef.Age}");
+            Console.WriteLine($"Age: {chef.Salaire}");
+            Console.WriteLine($"Age: {chef.Service}");
+            Console.WriteLine("");
+        }
 
         public void Afficher()
         {
-            Console.WriteLine("Nom : " + Nom + " Prenom : " + Prenom + " Age : " + Age + " Salaire : " + Salaire + " Service : " +Service);
+            Console.WriteLine($"Nom: {this.Nom}");
+            Console.WriteLine($"Prénom: {this.Prenom}");
+            Console.WriteLine($"Age: {this.Age}");
+            Console.WriteLine($"Age: {this.Salaire}");
+            Console.WriteLine($"Age: {this.Service}");
+            Console.WriteLine("");
         }
-
-        
     }
 }

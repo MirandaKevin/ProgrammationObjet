@@ -1,61 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace SocieteListe
+namespace SocieteAvecListe.Classes
 {
-    class Personne
+    public class Personne
     {
-        public String Nom { get; set; }
-        public String Prenom { get; set; }
+        public string Nom { get; set; }
+        public string Prenom { get; set; }
         public int Age { get; set; }
 
         public Personne() { }
 
-        public Personne(String nom, String prenom, int age)
+        public Personne(string nom, string prenom, int age)
         {
-            Nom = nom;
-            Prenom = prenom;
-            Age = age;
+            this.Prenom = prenom;
+            this.Nom = nom;
+            this.Age = age;
         }
 
-        public Personne(String nom) {
-            Nom = nom;
-            Prenom = "vide";
-            Age = 0;
+        public override string ToString()
+        {
+            return this.Nom + " " + this.Prenom + " " + this.Age;
         }
 
-        public String ToString(int chiffre)
+        public void Afficher(Personne personne1)
         {
-            int x = chiffre;
-            string strx = x.ToString();
-            return strx;
-        }
-        public String ToString(double chiffre)
-        {
-            double x = chiffre;
-            string strx = x.ToString();
-            return strx;
+            Console.WriteLine($"Nom: {personne1.Nom}");
+            Console.WriteLine($"Prénom: {personne1.Prenom}");
+            Console.WriteLine($"Age: {personne1.Age}");
+            Console.WriteLine("");
         }
 
         public void Afficher()
         {
-            Console.WriteLine("Nom : " + Nom + " Prenom : " + Prenom + " Age : " + Age);
+            Console.WriteLine($"Nom: {this.Nom}");
+            Console.WriteLine($"Prénom: {this.Prenom}");
+            Console.WriteLine($"Age: {this.Age}");
+            Console.WriteLine("");
         }
-
-        public void Afficher(String nom)
-        {
-            Console.WriteLine(">>>>Bonjour ci dessous les information de " + nom + "<<<<");
-            Console.WriteLine("Nom : " + Nom + " Prenom : " + Prenom + " Age : " + Age);
-        }
-
-        //public void ++(String nom)
-        //{
-          //  Personne personne = new Personne(nom);
-            //personne.Age = personne.Age + 1;
-        //}
-
     }
 }
