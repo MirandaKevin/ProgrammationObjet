@@ -85,9 +85,9 @@ namespace SocieteListe
                 }
             }
 
-            public void ajouterDebut(object premier_objet)
+            public void ajouterDebut(object unPremier)
             {
-                Element aMettreDebut = new Element(premier_objet);
+                Element aMettreDebut = new Element(unPremier);
                 // Inversion
                 aMettreDebut.suivant = this.premier;
                 this.premier = aMettreDebut;
@@ -95,11 +95,14 @@ namespace SocieteListe
                 completeTableau();
             }
 
-            public void getDernier()
+            public Element getDernier()
             {
-                // tant que element non null je vais au suivant, si je sors cest que cest le dernier
-                //Console.Write()
-
+                Element element = this.premier;
+                while (element.Suivant != null)
+                {
+                    element = element.Suivant;
+                }
+                return element;
             }
 
             public void ajouterFin(object dernier_objet)
@@ -111,33 +114,58 @@ namespace SocieteListe
                     this.nbElement++;
                     return;
                 }
-                // Element dernierElement = getDernier();
-                //dernierElement.suivant = aMettreFin;
-                //this.nbElement++;
-                //completeTableau();
+                 Element dernierElement = getDernier();
+                dernierElement.suivant = aMettreFin;
+                this.nbElement++;
+                completeTableau();
 
+                public void Lister()
+                {
+                    Element element = this.premier;
+                    if (element != null)
+                    {
+                        string cumul = element.Objet.ToString();
+                        while (element.Suivant != null)
+                        {
+                            element = element.Suivant;
+                            cumul += "," + element.Objet.ToString();
+                        }
+                        Console.WriteLine(cumul);
+                    }
+                    else
+                    {
+                        Console.WriteLine("La liste est vide");
+                    }
+                }
+
+                public void Vider()
+                {
+                    this.premier = null;
+                    this._NbElements = 0;
+                    FillArray();
+                }
 
                 //public String ToString()
                 //{
-                  //  if (this.premier == null)
-                    //{
-                      //  return "''";
-                    //}
-                    //else
-                    //{
-                      //  if (this.suivant != null)
-                        //{
+                //  if (this.premier == null)
+                //{
+                //  return "''";
+                //}
+                //else
+                //{
+                //  if (this.suivant != null)
+                //{
 
-                          //  string strx = this.valeur.ToString() + " " + this.suivant.ToString();
-                            //return strx;
-                        //}
-                        //else
-                        //{
-                          //  string strx = this.valeur.ToString();
-                            //return strx;
-                        //}
-                    //}
-                }
+                //  string strx = this.valeur.ToString() + " " + this.suivant.ToString();
+                //return strx;
+                //}
+                //else
+                //{
+                //  string strx = this.valeur.ToString();
+                //return strx;
+                //}
+                //}
+            }
 
             public static void Main(string[] args)
             {
